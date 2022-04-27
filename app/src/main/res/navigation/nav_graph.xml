@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/gamesGenreSelectionFragment">
+
+    <fragment
+        android:id="@+id/gamesGenreSelectionFragment"
+        android:name="com.example.gameapp.feature_games.presentation.games_genre_selection.GamesGenreSelectionFragment"
+        android:label="fragment_games_genre_selection"
+        tools:layout="@layout/fragment_games_genre_selection" />
+</navigation>

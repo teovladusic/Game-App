@@ -10,12 +10,16 @@ android {
 
     defaultConfig {
         applicationId "com.example.gameapp"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "com.example.gameapp."
+        testInstrumentationRunner "com.example.gameapp.core.di.HiltTestRunner"
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 
     buildTypes {
@@ -42,15 +46,52 @@ dependencies {
 
     // Fragment
     implementation "androidx.fragment:fragment-ktx:1.4.1"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
+
+    //Material Design
+    implementation 'com.google.android.material:material:1.5.0'
+
+    // Lifecycle + ViewModel & LiveData
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.4.1'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+    implementation 'androidx.lifecycle:lifecycle-service:2.4.1'
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0-native-mt'
 
     // Dagger Hilt
     implementation 'com.google.dagger:hilt-android:2.40.5'
     kapt 'com.google.dagger:hilt-android-compiler:2.40.5'
     kapt "androidx.hilt:hilt-compiler:1.0.0"
     kapt 'com.squareup.inject:assisted-inject-processor-dagger2:0.8.1'
-    implementation 'androidx.hilt:hilt-work:1.0.0'
 
+    //ViewPager2
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    // Navigation Component
+    implementation "androidx.navigation:navigation-fragment-ktx:2.4.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.4.2"
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+
+    //Coroutines for testing
+    androidTestImplementation('org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-native-mt') {
+        // conflicts with mockito due to direct inclusion of byte buddy
+        exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
+    }
+
+    //Truth
+    testImplementation "com.google.truth:truth:1.1.3"
+
+    //Turbine
+    testImplementation 'app.cash.turbine:turbine:0.7.0'
 
     //Dagger Hilt for testing
     testImplementation('com.google.dagger:hilt-android-testing:2.40.5')
@@ -61,5 +102,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    //Mockito
+    testImplementation 'org.mockito:mockito-core:4.4.0'
+    testImplementation 'org.mockito:mockito-inline:4.4.0'
 
 }
