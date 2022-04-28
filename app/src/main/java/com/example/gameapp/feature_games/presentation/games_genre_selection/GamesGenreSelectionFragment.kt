@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.gameapp.R
 import com.example.gameapp.databinding.FragmentGamesGenreSelectionBinding
@@ -47,6 +48,24 @@ class GamesGenreSelectionFragment : Fragment(R.layout.fragment_games_genre_selec
                 }
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.gamesGenreSelectionEvents.collectLatest { event ->
+                    when (event) {
+                        is GamesGenreSelectionViewModel.GamesGenreSelectionEvents.GenreConfirmed -> {
+                            goToGamesScreen()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun goToGamesScreen() {
+        val action =
+            GamesGenreSelectionFragmentDirections.actionGamesGenreSelectionFragmentToGamesFragment()
+        findNavController().navigate(action)
     }
 
     private fun registerPageChangeCallback() {

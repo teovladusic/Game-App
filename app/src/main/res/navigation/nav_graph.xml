@@ -9,5 +9,18 @@
         android:id="@+id/gamesGenreSelectionFragment"
         android:name="com.example.gameapp.feature_games.presentation.games_genre_selection.GamesGenreSelectionFragment"
         android:label="fragment_games_genre_selection"
-        tools:layout="@layout/fragment_games_genre_selection" />
+        tools:layout="@layout/fragment_games_genre_selection" >
+        <action
+            android:id="@+id/action_gamesGenreSelectionFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gamesFragment"
+        android:name="com.example.gameapp.feature_games.presentation.games.GamesFragment"
+        android:label="fragment_games"
+        tools:layout="@layout/fragment_games" >
+        <action
+            android:id="@+id/action_gamesFragment_to_gamesGenreSelectionFragment"
+            app:destination="@id/gamesGenreSelectionFragment" />
+    </fragment>
 </navigation>

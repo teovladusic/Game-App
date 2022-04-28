@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -16,8 +17,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GenresAdapter(
-    private val genres: List<Genre>
+    private val genres: List<Genre>,
+    private val listener: OnGenreClickListener
 ) : RecyclerView.Adapter<GenresAdapter.GenresViewHolder>() {
+
+    var selectedGenrePosition = -1
 
     lateinit var context: Context
 
@@ -39,6 +43,16 @@ class GenresAdapter(
         private val binding: GenreListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            binding.root.setOnClickListener {
+                if (adapterPosition == RecyclerView.NO_POSITION) {
+                    return@setOnClickListener
+                }
+
+                listener.onGenreClick(adapterPosition)
+            }
+        }
+
         @SuppressLint("SetTextI18n")
         fun bind(genre: Genre) {
             binding.tvGenreName.text = genre.name
@@ -48,6 +62,16 @@ class GenresAdapter(
                 Glide.with(context).load(genre.imageBackground)
                     .into(binding.imgViewGenreBackground)
             }
+
+            if (adapterPosition == selectedGenrePosition) {
+                binding.genreListItemConstraintLayout.setPadding(15)
+            } else {
+                binding.genreListItemConstraintLayout.setPadding(0)
+            }
         }
+    }
+
+    interface OnGenreClickListener {
+        fun onGenreClick(position: Int)
     }
 }

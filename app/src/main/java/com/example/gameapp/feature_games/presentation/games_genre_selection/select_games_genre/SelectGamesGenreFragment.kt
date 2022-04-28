@@ -1,21 +1,28 @@
 package com.example.gameapp.feature_games.presentation.games_genre_selection.select_games_genre
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.gameapp.R
+import com.example.gameapp.core.util.Resource
 import com.example.gameapp.databinding.FragmentSelectGamesGenreBinding
 import com.example.gameapp.feature_games.domain.model.Genre
 import com.example.gameapp.feature_games.presentation.games_genre_selection.GamesGenreSelectionViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SelectGamesGenreFragment : Fragment(R.layout.fragment_select_games_genre) {
+class SelectGamesGenreFragment : Fragment(R.layout.fragment_select_games_genre),
+    GenresAdapter.OnGenreClickListener {
 
     private var _binding: FragmentSelectGamesGenreBinding? = null
     private val binding get() = _binding!!
@@ -26,46 +33,83 @@ class SelectGamesGenreFragment : Fragment(R.layout.fragment_select_games_genre) 
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSelectGamesGenreBinding.bind(view)
 
-        binding.tvBackToWelcomeScreen.setOnClickListener {
+        binding.imgViewBackToWelcomeScreen.setOnClickListener {
             viewModel.previousPage()
         }
 
-        val genre1 = Genre(
-            1,
-            "Action",
-            "slug",
-            200,
-            "https://media.rawg.io/media/resize/640/-/games/d82/d82990b9c67ba0d2d09d4e6fa88885a7.jpg"
-        )
-        val genre2 = Genre(
-            2,
-            "Indie",
-            "slug",
-            200,
-            "https://media.rawg.io/media/resize/640/-/games/b6b/b6b20bfc4b34e312dbc8aac53c95a348.jpg"
-        )
-        val genre3 = Genre(
-            3,
-            "Adventure",
-            "slug",
-            200,
-            "https://media.rawg.io/media/resize/640/-/games/b7d/b7d3f1715fa8381a4e780173a197a615.jpg"
-        )
-        val genre4 = Genre(
-            4,
-            "Rpg",
-            "slug",
-            200,
-            "https://media.rawg.io/media/resize/640/-/games/21c/21cc15d233117c6809ec86870559e105.jpg"
-        )
+        binding.fabConfirmGenre.setOnClickListener {
+            viewModel.onGenreConfirmed()
+        }
 
-        val genres = listOf(genre1, genre2, genre3, genre4)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getGenresStatus.collectLatest { status ->
+                    when (status) {
+                        is Resource.Error -> handleGetGenresError(status.message!!)
+                        is Resource.Loading -> handleGetGenresLoading()
+                        is Resource.Success -> handleGetGenresSuccess(status.data!!)
+                    }
+                }
+            }
+        }
 
-        val genresAdapter = GenresAdapter(genres)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.selectedGenrePosition.collectLatest { position ->
+                    changeFloatingActionBtnBackground(position)
+                    if (binding.recViewGenres.adapter == null) return@collectLatest
+                    refreshAdapter(position)
+                }
+            }
+        }
+    }
+
+    private fun handleGetGenresError(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+        binding.lottieAnimationLoading.visibility = View.GONE
+    }
+
+
+    private fun handleGetGenresLoading() {
+        binding.lottieAnimationLoading.visibility = View.VISIBLE
+    }
+
+    private fun handleGetGenresSuccess(genres: List<Genre>) {
+        binding.lottieAnimationLoading.visibility = View.GONE
+        val genresAdapter = GenresAdapter(genres, this)
 
         binding.recViewGenres.adapter = genresAdapter
-        binding.recViewGenres.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recViewGenres.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun changeFloatingActionBtnBackground(position: Int) {
+        if (position != -1) {
+            binding.fabConfirmGenre.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.pink
+                )
+            )
+        } else {
+            binding.fabConfirmGenre.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.gray
+                )
+            )
+        }
+    }
+
+    private fun refreshAdapter(selectedGenrePosition: Int) {
+        val adapter = binding.recViewGenres.adapter as GenresAdapter
+        adapter.selectedGenrePosition = selectedGenrePosition
+        adapter.notifyItemChanged(selectedGenrePosition)
+        adapter.notifyItemChanged(viewModel.genreLastPosition)
+        viewModel.genreLastPosition = selectedGenrePosition
+    }
+
+    override fun onGenreClick(position: Int) {
+        viewModel.setSelectedGenrePosition(position)
     }
 
     override fun onDestroyView() {

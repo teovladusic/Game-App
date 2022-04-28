@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/tv_genre_select_welcome_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lines="2"
         android:text="Adding Fun to\nyour Life"
@@ -33,12 +33,11 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_view_welcome"
-        app:layout_constraintWidth_percent="0.6"
         tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tv_genre_select_description"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Please get started to select a game\ngenre you are interested in"
@@ -50,7 +49,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_genre_select_welcome_title"
-        app:layout_constraintWidth_percent="0.6"
         tools:ignore="HardcodedText" />
 
     <com.google.android.material.button.MaterialButton
