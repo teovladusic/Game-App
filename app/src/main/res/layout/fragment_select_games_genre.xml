@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto"
         android:text="Welcome,"
         android:textColor="@color/white"
         android:textSize="32sp"
@@ -35,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto"
         android:text="Please select a genre you are interested in"
         android:textColor="@color/white"
         android:textSize="17sp"
@@ -63,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_select_genre_description"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loading_game"/>
+        app:lottie_rawRes="@raw/loading_game" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_confirm_genre"

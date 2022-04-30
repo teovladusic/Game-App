@@ -45,11 +45,11 @@ class GenresAdapter(
 
         init {
             binding.root.setOnClickListener {
-                if (adapterPosition == RecyclerView.NO_POSITION) {
+                if (bindingAdapterPosition == RecyclerView.NO_POSITION) {
                     return@setOnClickListener
                 }
 
-                listener.onGenreClick(adapterPosition)
+                listener.onGenreClick(bindingAdapterPosition)
             }
         }
 
@@ -63,7 +63,7 @@ class GenresAdapter(
                     .into(binding.imgViewGenreBackground)
             }
 
-            if (adapterPosition == selectedGenrePosition) {
+            if (bindingAdapterPosition == selectedGenrePosition) {
                 binding.genreListItemConstraintLayout.setPadding(15)
             } else {
                 binding.genreListItemConstraintLayout.setPadding(0)

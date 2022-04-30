@@ -2,6 +2,8 @@ package com.example.gameapp.core.di
 
 import android.content.Context
 import com.example.gameapp.core.util.Constants
+import com.example.gameapp.core.util.DefaultDispatchers
+import com.example.gameapp.core.util.DispatcherProvider
 import com.example.gameapp.feature_games.data.local.GenreDataStoreImpl
 import com.example.gameapp.feature_games.data.remote.GamesApiService
 import com.example.gameapp.feature_games.domain.GenreDataStore
@@ -17,6 +19,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object CoreModule {
+
+    @Provides
+    @Singleton
+    fun provideDispatcherProvider(): DispatcherProvider = DefaultDispatchers()
 
     @Provides
     @Singleton

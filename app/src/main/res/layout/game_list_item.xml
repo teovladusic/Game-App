@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="8dp"
+    android:backgroundTint="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_view_game_image"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:contentDescription="Game"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tv_game_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_view_game_image"
+            tools:text="Hitman" />
+
+        <TextView
+            android:id="@+id/tv_game_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_game_title"
+            tools:text="Adventure" />
+
+        <TextView
+            android:id="@+id/tv_stars_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/gray"
+            app:layout_constraintEnd_toStartOf="@id/img_view_stars"
+            app:layout_constraintTop_toBottomOf="@id/tv_game_title"
+            tools:text="4.9" />
+
+        <ImageView
+            android:id="@+id/img_view_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star"
+            app:layout_constraintBottom_toBottomOf="@id/tv_stars_count"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_stars_count" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

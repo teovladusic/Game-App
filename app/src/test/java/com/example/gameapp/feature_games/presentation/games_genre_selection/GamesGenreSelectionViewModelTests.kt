@@ -1,4 +1,4 @@
-package com.example.gameapp.feature_games.presentation
+package com.example.gameapp.feature_games.presentation.games_genre_selection
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
@@ -10,11 +10,9 @@ import com.example.gameapp.feature_games.domain.GenresRepository
 import com.example.gameapp.feature_games.domain.model.Genre
 import com.example.gameapp.feature_games.domain.model.RepositoryResult
 import com.example.gameapp.feature_games.domain.use_cases.GetGenresUseCase
-import com.example.gameapp.feature_games.presentation.games_genre_selection.GamesGenreSelectionViewModel
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock

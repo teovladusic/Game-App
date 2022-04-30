@@ -1,14 +1,17 @@
 package com.example.gameapp.feature_games.di
 
-import com.example.gameapp.core.util.AndroidTestDispatchers
-import com.example.gameapp.core.util.DispatcherProvider
 import com.example.gameapp.core.util.EntityMapper
+import com.example.gameapp.feature_games.data.dto.GameDto
 import com.example.gameapp.feature_games.data.dto.GenreDto
+import com.example.gameapp.feature_games.data.repository.GamesRepositoryFakeImpl
 import com.example.gameapp.feature_games.data.repository.GenresRepositoryFakeImpl
-import com.example.gameapp.feature_games.di.GamesGenreSelectionModule
+import com.example.gameapp.feature_games.domain.GamesRepository
 import com.example.gameapp.feature_games.domain.GenresRepository
+import com.example.gameapp.feature_games.domain.model.Game
 import com.example.gameapp.feature_games.domain.model.Genre
+import com.example.gameapp.feature_games.domain.model.mapper.GameMapper
 import com.example.gameapp.feature_games.domain.model.mapper.GenreMapper
+import com.example.gameapp.feature_games.domain.use_cases.GetGamesUseCase
 import com.example.gameapp.feature_games.domain.use_cases.GetGenresUseCase
 import dagger.Module
 import dagger.Provides
@@ -27,10 +30,6 @@ object GamesGenreSelectionTestModule {
 
     @Provides
     @Singleton
-    fun provideDispatcherProvider(): DispatcherProvider = AndroidTestDispatchers()
-
-    @Provides
-    @Singleton
     fun provideGenresMapper(): EntityMapper<GenreDto, Genre> = GenreMapper()
 
     @Provides
@@ -42,4 +41,19 @@ object GamesGenreSelectionTestModule {
     fun provideGetGenresUseCase(
         repository: GenresRepository
     ) = GetGenresUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideGamesRepository(): GamesRepository = GamesRepositoryFakeImpl()
+
+    @Provides
+    @Singleton
+    fun provideGetGamesUseCase(
+        repository: GamesRepository
+    ) = GetGamesUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideGamesMapper(): EntityMapper<GameDto, Game> = GameMapper()
+
 }

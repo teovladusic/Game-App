@@ -152,6 +152,7 @@ class GamesGenreSelectionFragmentTests {
             viewPager = this.viewPager
             navController.setGraph(R.navigation.nav_graph)
             Navigation.setViewNavController(requireView(), navController)
+            navController.navigate(R.id.gamesGenreSelectionFragment)
         }
 
         viewPager.setCurrentItem(1, false)
