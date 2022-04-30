@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/gamesFragment">
+
+    <fragment
+        android:id="@+id/gamesGenreSelectionFragment"
+        android:name="com.example.gameapp.feature_games.presentation.games_genre_selection.GamesGenreSelectionFragment"
+        android:label="fragment_games_genre_selection"
+        tools:layout="@layout/fragment_games_genre_selection">
+        <action
+            android:id="@+id/action_gamesGenreSelectionFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/gamesFragment"
+        android:name="com.example.gameapp.feature_games.presentation.games.GamesFragment"
+        android:label="fragment_games"
+        tools:layout="@layout/fragment_games">
+        <action
+            android:id="@+id/action_gamesFragment_to_gamesGenreSelectionFragment"
+            app:destination="@id/gamesGenreSelectionFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_gamesFragment_to_gameDetailsFragment"
+            app:destination="@id/gameDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameDetailsFragment"
+        android:name="com.example.gameapp.feature_games.presentation.game_details.GameDetailsFragment"
+        android:label="fragment_game_details"
+        tools:layout="@layout/fragment_game_details">
+        <argument
+            android:name="game"
+            app:argType="com.example.gameapp.feature_games.domain.model.Game" />
+        <action
+            android:id="@+id/action_gameDetailsFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
+</navigation>
